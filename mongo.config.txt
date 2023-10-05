@@ -1,0 +1,2 @@
+sudo systemctl start mongod   //to start the mango db 
+mongosh              //to open mongo terminal 
