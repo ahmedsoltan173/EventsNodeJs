@@ -1,0 +1,81 @@
+<%- include('../partials/header') -%>
+    <%- include('../partials/navbar') -%>
+
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-md-9 offset-md-3"
+                    style="border: 11px solid #5a5a5a0d;border-radius: 20px;box-shadow: 9px 7px 0px 0px #a5a5a533;">
+                    <br>
+                    <h2> Edit New Event</h2>
+                    <br>
+                    <hr>
+                                
+
+                    <form action="/events/update" method="post" class="form">
+
+
+                        <div class="form-group">
+                            <label for="titel">Title</label>
+                            <input type="text" name="title" id="title" value="<%= event.title %>" class="form-control  mt-3">
+                            <% if(typeof locals.errors !== 'undefined'){ %>
+                                
+                            <% locals.errors.forEach(err=> {%>
+                                <% if (err.path=='title' ) {%>
+                                    <p class=""style="color:#58151c">
+                                        <%= err.msg %>
+                                    </p>
+                                    <% } %>
+                                        <% });} %>
+                                        <input type="hidden" name="id" value="<%= event.id %>">
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="titel">Description</label>
+                            <textarea name="description" rows="4" class="form-control mt-3"><%= event.description %></textarea>
+                            <% if(typeof locals.errors !== 'undefined'){ %>
+                                <% locals.errors.forEach(err=> {%>
+                                <% if (err.path=='description' ) {%>
+                                    <p class=""style="color:#58151c">
+                                        <%= err.msg %>
+                                    </p>
+                                    <% } %>
+                                        <% });} %>
+                        </div>
+<br>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" name="location" id="location" class="form-control  mt-3" value="<%= event.location %>">
+                            <% if(typeof locals.errors !== 'undefined'){ %>
+                                <% locals.errors.forEach(err=> {%>
+                                <% if (err.path=='location' ) {%>
+                                    <p class=""style="color:#58151c">
+                                        <%= err.msg %>
+                                    </p>
+                                    <% } %>
+                                        <% });} %>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" name="date" id="date" class="form-control  mt-3"value="<%= event.date %>">
+                            <% if(typeof locals.errors !== 'undefined'){ %>
+                                <% errors.forEach(err=> {%>
+                                <% if (err.path=='date' ) {%>
+                                    <p class=""style="color:#58151c">
+                                        <%= err.msg %>
+                                    </p>
+                                    <% } %>
+                                        <% });} %>
+                        </div>
+                        <div class="form-group mt-4">
+                            <input type="submit" class="btn btn-primary">
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+        <%- include('../partials/footer') -%>
