@@ -2,6 +2,11 @@ npm install express
 npm install mongoose
 npm install body-parser  
 npm install express-validator
+npm install axios
 //SESSION
 npm install express-session
 npm install connect-flash
+//date
+npm install moment
+//auth
+npm indtsll psssport

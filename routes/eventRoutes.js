@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const app = express();
-const eventController = require('../controllers/eventRoutesController');
+const eventController = require('../controllers/eventsController');
 const {
-    validateEvent,
+    validateEvent
 } = require('../validations/eventValidation');
 
+const {
+    UpdateEventValidation,
+} = require('../validations/UpdateEventValidation');
 
 //index
 router.get('/', eventController.index);     
@@ -18,7 +21,9 @@ router.get('/:id', eventController.show);
 //edit
 router.get('/edit/:id', eventController.edit);
 //update
-router.post('/update' , eventController.update);
+router.post('/update' ,UpdateEventValidation,eventController.update);
+//destroy
+router.delete('/delete/:id', eventController.destroy);
 
 
 

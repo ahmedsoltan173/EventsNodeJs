@@ -1,5 +1,8 @@
 const { validationResult } = require('express-validator');
 const Event = require('../models/Event');
+const { localsName } = require('ejs');
+const moment = require('moment');
+moment().format();
 
 
 // index 
@@ -59,7 +62,11 @@ const edit = (req, res) => {
   Event.findOne({ _id: req.params.id })
     .then((event) => {
       res.render('events/edit', {
-        event: event
+        event: event,
+        eventDate:moment(event.date).format('YYYY-MM-DD'),
+        errors:req.flash('errors'),
+        message:req.flash('info')
+
       });
     })
     .catch((err) => {
@@ -70,15 +77,42 @@ const edit = (req, res) => {
 
 //update
 const update = (req,res)=>{
+  // res.json(req.body);
 
-  res.status(500).send('Internal Server Error');
+  let fields = {
+    title:req.body.title,
+    location:req.body.location,
+    description:req.body.description,
+    date:req.body.date,
+  }
+  let query={_id:req.body.id};
+  Event.findByIdAndUpdate(query,fields)    
+    .then((event)=>{
+      req.flash('info',"The event Was Updated Successfully");
+      res.redirect(`/events/edit/${req.body.id}`);
+    }).catch((error)=>{
+      req.flash('errors',"Something went wrong");
+    })
 
 }
 
 //delete
-// const delete = (req,res)=>{
+const destroy = (req,res)=>{
+  // res.json(req.params);
+  let query=req.params.id;
 
-// }
+  Event.findByIdAndDelete(query)
+  .then(()=>{
+    res.status(200).json('deleted');
+    // res.json('success');
+    req.flash('info',"The event Was Deleted Successfully");
+    // res.redirect(`/events/`);
+  }).catch((error)=>{
+    res.status(404).json("There was an error ");
+
+    req.flash('errors',"Something went wrong");
+  })
+}
 
 
 
@@ -91,5 +125,5 @@ module.exports = {
   show,
   edit,
   update, 
-  // delete
+  destroy
 }

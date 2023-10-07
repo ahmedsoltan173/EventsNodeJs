@@ -2,7 +2,6 @@ const express =require('express');
 const app=express();
 const db = require('./config/database');
 const bodyParser=require('body-parser');
-// const moment = require('moment');
 const session = require('express-session');
 const flash = require('connect-flash')
 
@@ -31,9 +30,11 @@ app.use(flash());
 
 
 //events routes 
-var events =require('./routes/event-routes');
+var events =require('./routes/eventRoutes');
     app.use('/events',events);
-
+//auth routes
+var auth=require('./routes/authRoutes');
+    app.use('/login',auth);
 
 
 
