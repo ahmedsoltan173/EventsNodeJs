@@ -11,7 +11,7 @@ const {
 } = require('../validations/UpdateEventValidation');
 
 //index
-router.get('/', eventController.index);     
+router.get('/:page?', eventController.index);     
 //create
 router.get('/create', eventController.create);
 //store

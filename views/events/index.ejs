@@ -1,41 +1,58 @@
 <%- include('../partials/header') -%>
-  <%- include('../partials/navbar') -%>
+<%- include('../partials/navbar') -%>
 
-    <div class="container">
-      <div class="row mt-3">
-        <%- include('../partials/flashMessage') %>
-          <% events.forEach((event)=>{%>
+<div class="container">
+  <div class="row mt-3">
+    <%- include('../partials/flashMessage') %>
+    <% events.forEach((event)=>{%>
 
-            <div class="col-md-4 mt-3">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title"><b> Title: </b>
-                    <%= event.title %>
-                  </h5>
-                  <p class="card-text"><b>Description: </b>
-                    <%= event.description %>
-                  </p>
-                  <p class="card-text"><b>Location: </b>
-                    <%= event.location %>
-                  </p>
-                  <span class="card-text"><b>Date: </b>
-                    <%= event.date.toDateString() %>
-                  </span><br>
-                  <span class="card-text"><b>Created At: </b>
-                    <%=
+    <div class="col-md-4 mt-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><b> Title: </b>
+            <%= event.title %>
+          </h5>
+          <p class="card-text"><b>Description: </b>
+            <%= event.description %>
+          </p>
+          <p class="card-text"><b>Location: </b>
+            <%= event.location %>
+          </p>
+          <span class="card-text"><b>Date: </b>
+            <%= event.date.toDateString() %>
+          </span><br>
+          <span class="card-text"><b>Created At: </b>
+            <%=
                       (event.created_at)?event.created_at.toLocaleDateString('en-US',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}): ''
                       %>
-                  </span>
-                  <hr>
-                  <a href="<%= '/events/'+ event.id %>" class="btn btn-primary">Show More </a>
-                </div>
-              </div>
-            </div>
-
-            <%})%>
+          </span>
+          <hr>
+          <a href="<%= '/events/'+ event.id %>" class="btn btn-primary">Show More </a>
+        </div>
       </div>
     </div>
 
+    <%})%>
+    <div class="row">
+      <div class="col-12 mt-2 mb-4">
+        <nav aria-label="...">
+          <ul class="pagination pagination-lg justify-content-center">
+            <% for(let i=1;i<=Math.ceil(total/5);i++){ %>
+            <% if(page == i){ %>
+            <li class="page-item active"><a class="page-link" href="<%= '/events/' + i %>"><%= i %></a></li>
+
+            <% }else{ %>
+            <li class="page-item"><a class="page-link" href="<%= '/events/' + i %>"><%= i %></a></li>
+            <% } %>
+
+            <% } %>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
 
 
-    <%- include('../partials/footer') -%>
+
+<%- include('../partials/footer') -%>

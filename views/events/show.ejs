@@ -14,9 +14,13 @@
                       <span class="card-text"><b>Date: </b><%= event.date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }) %></span><br>
                       <span class="card-text"><b>Created At: </b><%= (event.created_at)?event.created_at.toLocaleDateString('en-US',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}): '' %></span>
                       <hr>
+                      <% if((user) && user.id == event.user_id){ %>
                       <a href="<%= '/events/edit/'+ event.id %>" class="btn btn-primary">Edit </a>
                       <!-- <a href="<%= '/events/delete/'+ event.id %>" class="btn btn-danger">Delete</a> -->
-                        <button class="btn btn-danger" onclick="deleteEvent()" id="DeleteBtn" data-id="<%= event.id %>">Delete</button>
+                      <button class="btn btn-danger" onclick="deleteEvent()" id="DeleteBtn" data-id="<%= event.id %>">Delete</button>
+                      <% }else{ %>
+                        <p class="alert alert-info">This event not belong to you !!</p>
+                        <% } %>
                     </div>
                   </div>
             </div>

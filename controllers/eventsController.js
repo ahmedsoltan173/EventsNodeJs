@@ -7,17 +7,48 @@ moment().format();
 
 // index 
 const index = (req, res) => {
-  Event.find({})
+
+//start pagination 
+  if(!(req.params.page)){
+    page = 1;
+  }else{
+    page=parseInt(req.params.page);
+  }
+  
+  if(req.params.page == 0){
+    page=1;
+  }
+
+  let q = {
+    skip : 5 * (page-1),
+    limit: 5 
+  }
+//find total records
+let total = 0 ;
+
+Event.countDocuments({})
+  .then((total)=>{
+    totalDocs=parseInt(total);
+//end pagination 
+
+    Event.find({},{},q)
     .then((events) => {
       res.render('events/index', {
         events: events,
         message:req.flash('info'),
-        error:req.flash('error')
+        error:req.flash('error'),
+        total:parseInt(totalDocs),
+        page:page
       })
     })
     .catch((err) => {
       console.log(err)
     })
+
+
+  }).catch((err)=>{
+    console.log(err);
+  })
 }
 // create
 const create = (req, res) => {
@@ -106,11 +137,17 @@ const destroy = (req,res)=>{
   // res.json(req.params);
   let query=req.params.id;
 
-  Event.findByIdAndDelete(query)
-  .then(()=>{
-    res.status(200).json('deleted');
-    // res.json('success');
-    req.flash('info',"The event Was Deleted Successfully");
+  Event.findById(query)
+  .then((event)=>{
+    if (event.user_id != req.user.id) {
+      req.flash('error', "This User Can't edit this event!");
+      res.status(404).json("There was an error ");
+    }else{
+      event.deleteOne();
+      res.status(200).json('deleted');
+      // res.json('success');
+      req.flash('info',"The event Was Deleted Successfully");
+    }
     // res.redirect(`/events/`);
   }).catch((error)=>{
     res.status(404).json("There was an error ");
