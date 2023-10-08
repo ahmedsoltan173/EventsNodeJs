@@ -21,8 +21,11 @@ const eventSchema=new mongoose.Schema({
     created_at:{
         type:Date,
         required:true
-    },
-    // comments
+    },user_id:{
+        type:String,
+        required:true
+    }
+    // comments 
 });
 
 let Event=mongoose.model('Event',eventSchema,'events');

@@ -4,6 +4,8 @@ const db = require('./config/database');
 const bodyParser=require('body-parser');
 const session = require('express-session');
 const flash = require('connect-flash')
+const passport =require('passport');
+const passportSetup=require('./config/auth');
 
 /********************************************************
  * ************************ bring *********************** 
@@ -28,13 +30,30 @@ app.use(session({
 }))
 app.use(flash());
 
+//bring passport auth 
+app.use(passport.initialize());
+app.use(passport.session());
+//store user object 
+
+// app.get('*',(req,res,next)=>{
+//     res.locals.user=req.user||null;
+//     next();
+// });
+//middleware
+var middlewares =require('./routes/middleWare');
+    app.use('*',middlewares);
+
 
 //events routes 
 var events =require('./routes/eventRoutes');
     app.use('/events',events);
+
 //auth routes
 var auth=require('./routes/authRoutes');
-    app.use('/login',auth);
+    app.use('/auth',auth);
+
+
+
 
 
 

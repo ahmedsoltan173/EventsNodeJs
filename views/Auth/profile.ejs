@@ -1,0 +1,33 @@
+<%- include('../partials/header') -%>
+<%- include('../partials/navbar') -%>
+
+<div class="container">
+  <div class="row mt-4">
+    <div class="col-md-6 offset-md-3" style="border: 11px solid #5a5a5a0d;border-radius: 20px;box-shadow: 9px 7px 0px 0px #a5a5a533;">
+      <br>
+      <h2 style="text-align: center;">Login</h2>
+      <br>
+      <hr>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4">
+                <img src="https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg" alt="Profile Picture" class="img-fluid">
+              </div>
+              <div class="col-md-8">
+                <h2><%= user.name %></h2>
+                <p>Email: <%= user.email %></p>
+                <p>Address: <%= user.address %></p>
+                <p>Phone: <%= user.phone %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+
+<%- include('../partials/footer') -%>

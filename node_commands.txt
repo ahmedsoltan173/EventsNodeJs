@@ -10,3 +10,4 @@ npm install connect-flash
 npm install moment
 //auth
 npm indtsll psssport
+npm install passport passport-local bcrypt-nodejs

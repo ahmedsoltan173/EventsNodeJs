@@ -7,9 +7,18 @@ const authController = require('../controllers/Auth/authController');
 // }= require('../validations/authValidation.js')
 
 //login page
-router.get('/', authController.login);     
+router.get('/login', authController.login);     
 
 router.post('/login',authController.checkLogin);
 
-module.exports = router;
+router.get('/signup',authController.signup);
+
+router.post('/signup',authController.storeSignUp);
+
+router.get('/logout',authController.logout);
+
+router.get('/profile',authController.profile);
+
+
+module.exports = router;            
 

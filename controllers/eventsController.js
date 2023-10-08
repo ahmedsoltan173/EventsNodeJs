@@ -11,7 +11,8 @@ const index = (req, res) => {
     .then((events) => {
       res.render('events/index', {
         events: events,
-        message:req.flash('info')
+        message:req.flash('info'),
+        error:req.flash('error')
       })
     })
     .catch((err) => {
@@ -33,6 +34,7 @@ const store = (req, res) => {
     description: req.body.description,
     location: req.body.location,
     date: req.body.date,
+    user_id:req.user.id,
     created_at: Date.now()
   });
 
@@ -60,21 +62,24 @@ const show = (req, res) => {
 //edit
 const edit = (req, res) => {
   Event.findOne({ _id: req.params.id })
-    .then((event) => {
-      res.render('events/edit', {
-        event: event,
-        eventDate:moment(event.date).format('YYYY-MM-DD'),
-        errors:req.flash('errors'),
-        message:req.flash('info')
+  .then((event) => {
+    if (event.user_id != req.user.id) {
+      req.flash('error', "This User Can't edit this event!");
+      return res.redirect('/events');
+    }
 
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send('Internal Server Error');
+    res.render('events/edit', {
+      event: event,
+      eventDate: moment(event.date).format('YYYY-MM-DD'),
+      errors: req.flash('errors'),
+      message: req.flash('info')
     });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).send('Internal Server Error' + err);
+  });
 }
-
 //update
 const update = (req,res)=>{
   // res.json(req.body);

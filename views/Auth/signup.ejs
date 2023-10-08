@@ -1,0 +1,113 @@
+<%- include('../partials/header') -%>
+<%- include('../partials/navbar') -%>
+
+<div class="container">
+  <div class="row mt-3">
+    <div class="col-md-6 offset-md-3" style="border: 11px solid #5a5a5a0d;border-radius: 20px;box-shadow: 9px 7px 0px 0px #a5a5a533;">
+      <br>
+      <h2 style="text-align: center;">SignUp</h2>
+      <br>
+      <hr>
+      <%- include('../partials/flashMessage') %>
+
+      <form action="/auth/signup" method="post" class="form">
+        <div class="form-group">
+          <label for="name">name</label>
+          <input type="name" name="name" id="name" class="form-control  mt-3">
+          <% if(typeof locals.errors !=='undefined' ){ %>
+
+          <% locals.errors.forEach(err=> {%>
+          <% if (err.path=='name' ) {%>
+          <p class="" style="color:#58151c">
+            <%= err.msg %>
+          </p>
+          <% } %>
+          <% });} %>
+        </div>
+
+
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="address" name="address" id="address" class="form-control  mt-3">
+          <% if(typeof locals.errors !=='undefined' ){ %>
+
+          <% locals.errors.forEach(err=> {%>
+          <% if (err.path=='address' ) {%>
+          <p class="" style="color:#58151c">
+            <%= err.msg %>
+          </p>
+          <% } %>
+          <% });} %>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input type="number" name="phone" id="phone" class="form-control  mt-3">
+          <% if(typeof locals.errors !=='undefined' ){ %>
+
+          <% locals.errors.forEach(err=> {%>
+          <% if (err.path=='phone' ) {%>
+          <p class="" style="color:#58151c">
+            <%= err.msg %>
+          </p>
+          <% } %>
+          <% });} %>
+        </div>
+
+        <div class="form-group">
+          <label for="email">email</label>
+          <input type="email" name="email" id="email" class="form-control  mt-3">
+          <% if(typeof locals.errors !=='undefined' ){ %>
+
+          <% locals.errors.forEach(err=> {%>
+          <% if (err.path=='email' ) {%>
+          <p class="" style="color:#58151c">
+            <%= err.msg %>
+          </p>
+          <% } %>
+          <% });} %>
+        </div>
+
+        <div class="form-group">
+          <label for="password">password</label>
+          <input type="password" name="password" id="password" class="form-control  mt-3">
+          <% if(typeof locals.errors !=='undefined' ){ %>
+
+          <% locals.errors.forEach(err=> {%>
+          <% if (err.path=='password' ) {%>
+          <p class="" style="color:#58151c">
+            <%= err.msg %>
+          </p>
+          <% } %>
+          <% });} %>
+        </div>
+
+        <div class="form-group">
+          <label for="confirm_password">Confirm Password</label>
+          <input type="password" name="confirm_password" id="confirm_password" class="form-control  mt-3">
+          <% if(typeof locals.errors !=='undefined' ){ %>
+
+          <% locals.errors.forEach(err=> {%>
+          <% if (err.path=='confirm_password' ) {%>
+          <p class="" style="color:#58151c">
+            <%= err.msg %>
+          </p>
+          <% } %>
+          <% });} %>
+        </div>
+
+
+
+
+        <div class="form-group mt-4">
+          <input type="submit" class="btn btn-primary">
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<%- include('../partials/footer') -%>
