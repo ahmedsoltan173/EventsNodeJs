@@ -1,5 +1,7 @@
 const { validationResult } = require('express-validator');
 const Post = require('../models/posts');
+const User = require('../models/User');
+const Event = require('../models/Event');
 const { localsName } = require('ejs');
 
 
@@ -17,14 +19,36 @@ const index = (req, res) => {
 const create = async (req, res) => {
 
     const { title, eventOwner, userOwner } = req.body;
+    const event = await Event.findById(eventOwner);
+    const user = await User.findById(userOwner);
+    if (!event) {
+        return res.status(404).json({ error: 'Event not found' });
+      }
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+    
+     const post= new Post({ title, eventOwner, userOwner });
 
-    await new Post({ title, eventOwner, userOwner }).save().then((post) => {
-        res.json(post)
+        // .then((post) => {
+        event.posts.push(post);
+        user.posts.push(post);
+        
+        Promise.all([event.save(), user.save(),post.save()]).then((g)=>{
 
-    }).catch((err) => {
-        res.json(err)
+            res.json({ message: 'Post added successfully' });
+        }).catch((err)=>{
+            res.json(err);
+        });
 
-    });
+        // res.json(post)
+
+    // }).catch((err) => {
+    //     res.json(err)
+    // });
+
+
+
 }
 
 

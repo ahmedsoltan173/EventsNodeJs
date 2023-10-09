@@ -8,6 +8,7 @@
                     <div class="card-body">
                       <h5 class="card-title"><b> Title: </b><%= event.title %></h5>
                       <hr>
+                      
                       <p class="card-text"><b>Description: </b><%= event.description %></p>
                       <p class="card-text"><b>Location: </b><%= event.location %></p>
                       <!-- span.badge.badge-secondary -->
@@ -22,8 +23,42 @@
                         <p class="alert alert-info">This event not belong to you !!</p>
                         <% } %>
                     </div>
-                  </div>
-            </div>
+                    <div>
+
+                    </div>
+                </div>
+          </div>
+
+                        <table class="table">
+                            <thead class="thead-dark">
+                              <tr>
+                                <th colspan="7" style="text-align: center;"><h2>Event Posts Data</h2></th>
+                              </tr>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Post Title</th>
+                                <th scope="col">Owner Name</th>
+                                <th scope="col">owner Email</th>
+                                <th scope="col">Created At</th>
+                              
+                      
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <% event.posts.forEach((post)=>{%>
+                                <tr>
+                                    <th scope="row">#</th>
+                                    <td><%= post.title %></td>
+                                    <td><%= post.userOwner.name %></td>
+                                    <td><%= post.userOwner.email %></td>
+                                    <td><%= post.createdAt %></td>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                       
+
+                      
 
         </div>
     </div>

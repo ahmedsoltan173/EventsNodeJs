@@ -1,6 +1,7 @@
 const mongoose=require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
-
+const Schema = mongoose.Schema;
+const ObjectId=mongoose.Types.ObjectId;
 const userSchema = new mongoose.Schema({
     name:{
         type:String,
@@ -29,7 +30,15 @@ const userSchema = new mongoose.Schema({
     created_at:{
         type:Date,
         required:true
-    }
+    },
+    posts: [{
+        type: ObjectId,
+        ref: 'Post',
+      }],
+      events: [{
+        type: ObjectId,
+        ref: 'Event',
+      }],
 })
 //to hash password 
 userSchema.methods.hashPassword = (password)=>{

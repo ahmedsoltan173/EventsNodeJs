@@ -1,5 +1,7 @@
 const { event } = require('jquery');
 const mongoose =require('mongoose');
+const Schema = mongoose.Schema;
+const ObjectId=mongoose.Types.ObjectId;
 
 const eventSchema=new mongoose.Schema({
     title:{
@@ -24,8 +26,11 @@ const eventSchema=new mongoose.Schema({
     },user_id:{
         type:String,
         required:true
-    }
-    // comments 
+    },
+    posts: [{
+        type: ObjectId,
+        ref: 'Post',
+      }],
 });
 
 let Event=mongoose.model('Event',eventSchema,'events');

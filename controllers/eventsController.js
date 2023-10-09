@@ -1,5 +1,7 @@
 const { validationResult } = require('express-validator');
 const Event = require('../models/Event');
+const Post = require('../models/posts');
+const User = require('../models/User');
 const { localsName } = require('ejs');
 const moment = require('moment');
 moment().format();
@@ -82,7 +84,13 @@ const store = (req, res) => {
 }
 //show
 const show = (req, res) => {
-  Event.findOne({ _id: req.params.id })
+  Event.findOne({ _id: req.params.id }).populate({
+    path:'posts',
+    model:Post,
+        populate: {
+        path: 'userOwner',
+        model: User,
+      },})
     .then((event) => {
       res.render('events/show', {
         event: event
