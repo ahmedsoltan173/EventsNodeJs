@@ -35,10 +35,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 //store user object 
 
-// app.get('*',(req,res,next)=>{
-//     res.locals.user=req.user||null;
-//     next();
-// });
 //middleware
 var middlewares =require('./routes/middleWare');
     app.use('*',middlewares);
@@ -48,11 +44,13 @@ var middlewares =require('./routes/middleWare');
 var events =require('./routes/eventRoutes');
     app.use('/events',events);
 
-//auth routes
+//auth routes 
 var auth=require('./routes/authRoutes');
     app.use('/auth',auth);
 
-
+// user routes
+var user=require('./routes/userRoutes');
+    app.use('/user',user);
 
 
 

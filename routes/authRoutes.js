@@ -17,7 +17,6 @@ router.post('/signup',authController.storeSignUp);
 
 router.get('/logout',authController.logout);
 
-router.get('/profile',authController.profile);
 
 
 module.exports = router;            

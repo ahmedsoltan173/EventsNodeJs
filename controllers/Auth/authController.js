@@ -15,7 +15,7 @@ const login = (req, res) => {
 
 
 const checkLogin = passport.authenticate('local.login',{
-        successRedirect:'/auth/profile',
+        successRedirect:'/user/profile',
         failureRedirect:'/auth/login',
         failureFlash:true,
     });
@@ -32,19 +32,13 @@ const signup = (req, res) => {
 
 const storeSignUp = passport.authenticate('local.signup', 
                     {
-                        successRedirect: '/auth/profile',
+                        successRedirect: '/user/profile',
                         failureRedirect: '/auth/signup',
                         failureFlash:true
                     });
 
 
 
-const profile=(req,res)=>{
-        res.render('Auth/profile',{
-            user:req.user
-        })
-
-}
 
 const logout=(req,res,next)=>{
     req.logout(function(err) {
@@ -61,6 +55,5 @@ module.exports = {
     signup,
     checkLogin,
     storeSignUp,
-    profile,
     logout
 }

@@ -44,7 +44,8 @@ passport.use('local.signup', new localStratgy({
                     newUser.password=newUser.hashPassword(req.body.password);
                     newUser.phone=req.body.phone;
                     newUser.address=req.body.address;
-                    newUser.created_at=Date.now()
+                    newUser.created_at=Date.now();
+                    newUser.image="profile.jpg"
                     newUser.save()
                             .then((user)=>{
                                 return done(null,user,req.flash('success','User Added'))
