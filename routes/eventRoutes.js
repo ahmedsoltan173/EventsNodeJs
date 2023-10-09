@@ -11,13 +11,13 @@ const {
 } = require('../validations/UpdateEventValidation');
 
 //index
-router.get('/:page?', eventController.index);     
+router.get('/index/:page?', eventController.index);     
 //create
 router.get('/create', eventController.create);
 //store
 router.post('/store', validateEvent, eventController.store);
 //show
-router.get('/:id', eventController.show);
+router.get('/show/:id', eventController.show);
 //edit
 router.get('/edit/:id', eventController.edit);
 //update

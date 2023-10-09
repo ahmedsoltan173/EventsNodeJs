@@ -27,7 +27,7 @@
                       %>
           </span>
           <hr>
-          <a href="<%= '/events/'+ event.id %>" class="btn btn-primary">Show More </a>
+          <a href="<%= '/events/show/'+ event.id %>" class="btn btn-primary">Show More </a>
         </div>
       </div>
     </div>
@@ -39,10 +39,10 @@
           <ul class="pagination pagination-lg justify-content-center">
             <% for(let i=1;i<=Math.ceil(total/5);i++){ %>
             <% if(page == i){ %>
-            <li class="page-item active"><a class="page-link" href="<%= '/events/' + i %>"><%= i %></a></li>
+            <li class="page-item active"><a class="page-link" href="<%= '/events/index/' + i %>"><%= i %></a></li>
 
             <% }else{ %>
-            <li class="page-item"><a class="page-link" href="<%= '/events/' + i %>"><%= i %></a></li>
+            <li class="page-item"><a class="page-link" href="<%= '/events/index/' + i %>"><%= i %></a></li>
             <% } %>
 
             <% } %>

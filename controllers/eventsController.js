@@ -8,52 +8,55 @@ moment().format();
 // index 
 const index = (req, res) => {
 
-//start pagination 
-  if(!(req.params.page)){
+  //start pagination 
+  if (!(req.params.page)) {
     page = 1;
-  }else{
-    page=parseInt(req.params.page);
+  } else {
+    page = parseInt(req.params.page);
   }
-  
-  if(req.params.page == 0){
-    page=1;
+
+  if (req.params.page == 0) {
+    page = 1;
   }
 
   let q = {
-    skip : 5 * (page-1),
-    limit: 5 
+    skip: 5 * (page - 1),
+    limit: 5
   }
-//find total records
-let total = 0 ;
+  //find total records
+  let total = 0;
 
-Event.countDocuments({})
-  .then((total)=>{
-    totalDocs=parseInt(total);
-//end pagination 
+  Event.countDocuments({})
+    .then((total) => {
+      totalDocs = parseInt(total);
+      //end pagination 
 
-    Event.find({},{},q)
-    .then((events) => {
-      res.render('events/index', {
-        events: events,
-        message:req.flash('info'),
-        error:req.flash('error'),
-        total:parseInt(totalDocs),
-        page:page
-      })
+      Event.find({}, {}, q)
+        .then((events) => {
+          res.render('events/index', {
+            events: events,
+            message: req.flash('info'),
+            error: req.flash('error'),
+            total: parseInt(totalDocs),
+            page: page
+          })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
+
+    }).catch((err) => {
+      console.log(err);
     })
-    .catch((err) => {
-      console.log(err)
-    })
-
-
-  }).catch((err)=>{
-    console.log(err);
-  })
 }
+
+
+
 // create
 const create = (req, res) => {
-  res.render('events/create',{
-    errors:req.flash('errors')
+  res.render('events/create', {
+    errors: req.flash('errors')
   });
 
 }
@@ -65,13 +68,13 @@ const store = (req, res) => {
     description: req.body.description,
     location: req.body.location,
     date: req.body.date,
-    user_id:req.user.id,
+    user_id: req.user.id,
     created_at: Date.now()
   });
 
   newEvent.save().then(() => {
-    req.flash('info','The Event Was Created Successfully !');
-    res.redirect('/events');
+    req.flash('info', 'The Event Was Created Successfully !');
+    res.redirect('/events/index');
   }).catch((err) => {
     console.log(err);
   })
@@ -93,67 +96,67 @@ const show = (req, res) => {
 //edit
 const edit = (req, res) => {
   Event.findOne({ _id: req.params.id })
-  .then((event) => {
-    if (event.user_id != req.user.id) {
-      req.flash('error', "This User Can't edit this event!");
-      return res.redirect('/events');
-    }
+    .then((event) => {
+      if (event.user_id != req.user.id) {
+        req.flash('error', "This User Can't edit this event!");
+        return res.redirect('/events/index');
+      }
 
-    res.render('events/edit', {
-      event: event,
-      eventDate: moment(event.date).format('YYYY-MM-DD'),
-      errors: req.flash('errors'),
-      message: req.flash('info')
+      res.render('events/edit', {
+        event: event,
+        eventDate: moment(event.date).format('YYYY-MM-DD'),
+        errors: req.flash('errors'),
+        message: req.flash('info')
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Internal Server Error' + err);
     });
-  })
-  .catch((err) => {
-    console.log(err);
-    res.status(500).send('Internal Server Error' + err);
-  });
 }
 //update
-const update = (req,res)=>{
+const update = (req, res) => {
   // res.json(req.body);
 
   let fields = {
-    title:req.body.title,
-    location:req.body.location,
-    description:req.body.description,
-    date:req.body.date,
+    title: req.body.title,
+    location: req.body.location,
+    description: req.body.description,
+    date: req.body.date,
   }
-  let query={_id:req.body.id};
-  Event.findByIdAndUpdate(query,fields)    
-    .then((event)=>{
-      req.flash('info',"The event Was Updated Successfully");
+  let query = { _id: req.body.id };
+  Event.findByIdAndUpdate(query, fields)
+    .then((event) => {
+      req.flash('info', "The event Was Updated Successfully");
       res.redirect(`/events/edit/${req.body.id}`);
-    }).catch((error)=>{
-      req.flash('errors',"Something went wrong");
+    }).catch((error) => {
+      req.flash('errors', "Something went wrong");
     })
 
 }
 
 //delete
-const destroy = (req,res)=>{
+const destroy = (req, res) => {
   // res.json(req.params);
-  let query=req.params.id;
+  let query = req.params.id;
 
   Event.findById(query)
-  .then((event)=>{
-    if (event.user_id != req.user.id) {
-      req.flash('error', "This User Can't edit this event!");
+    .then((event) => {
+      if (event.user_id != req.user.id) {
+        req.flash('error', "This User Can't edit this event!");
+        res.status(404).json("There was an error ");
+      } else {
+        event.deleteOne();
+        res.status(200).json('deleted');
+        // res.json('success');
+        req.flash('info', "The event Was Deleted Successfully");
+      }
+      // res.redirect(`/events/`);
+    }).catch((error) => {
       res.status(404).json("There was an error ");
-    }else{
-      event.deleteOne();
-      res.status(200).json('deleted');
-      // res.json('success');
-      req.flash('info',"The event Was Deleted Successfully");
-    }
-    // res.redirect(`/events/`);
-  }).catch((error)=>{
-    res.status(404).json("There was an error ");
 
-    req.flash('errors',"Something went wrong");
-  })
+      req.flash('errors', "Something went wrong");
+    })
 }
 
 
@@ -166,6 +169,6 @@ module.exports = {
   store,
   show,
   edit,
-  update, 
+  update,
   destroy
 }
