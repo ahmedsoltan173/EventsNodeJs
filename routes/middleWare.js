@@ -6,7 +6,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 
 
 //auth middleware
-router.get('*',authMiddleware.auth);
+// router.get('*',authMiddleware.auth);
 
 
 

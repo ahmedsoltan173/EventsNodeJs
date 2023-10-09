@@ -44,6 +44,10 @@ var middlewares =require('./routes/middleWare');
 var events =require('./routes/eventRoutes');
     app.use('/events',events);
 
+//events routes 
+var posts =require('./routes/postsRoutes');
+    app.use('/posts',posts);
+
 //auth routes 
 var auth=require('./routes/authRoutes');
     app.use('/auth',auth);

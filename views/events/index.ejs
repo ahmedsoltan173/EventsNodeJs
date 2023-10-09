@@ -1,43 +1,59 @@
 <%- include('../partials/header') -%>
 <%- include('../partials/navbar') -%>
 
+ 
 <div class="container">
   <div class="row mt-3">
     <%- include('../partials/flashMessage') %>
-    <% events.forEach((event)=>{%>
 
-    <div class="col-md-4 mt-3">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title"><b> Title: </b>
-            <%= event.title %>
-          </h5>
-          <p class="card-text"><b>Description: </b>
-            <%= event.description %>
-          </p>
-          <p class="card-text"><b>Location: </b>
-            <%= event.location %>
-          </p>
-          <span class="card-text"><b>Date: </b>
-            <%= event.date.toDateString() %>
-          </span><br>
-          <span class="card-text"><b>Created At: </b>
-            <%=
-                      (event.created_at)?event.created_at.toLocaleDateString('en-US',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}): ''
-                      %>
-          </span>
-          <hr>
-          <a href="<%= '/events/show/'+ event.id %>" class="btn btn-primary">Show More </a>
-        </div>
-      </div>
-    </div>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th colspan="7" style="text-align: center;"><h2>Events Data</h2></th>
+        </tr>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Description</th>
+          <th scope="col">Location</th>
+          <th scope="col">Date</th>
+          <th scope="col">Created At</th>
+          <th scope="col">Option</th>
+
+        </tr>
+      </thead>
+      <tbody>
+    <% events.forEach((event)=>{%>
+          <tr>
+            <th scope="row">#</th>
+            <td><%= event.title %></td>
+            <td style="width: 200px;overflow: hidden;"><div style="width: 200px;max-height:100px;overflow: hidden;"><%= event.description %></div></td>
+            <td><%= event.location %></td>
+            <td><%= event.date.toDateString()  %></td>
+            <td> <%=
+              (event.created_at)?event.created_at.toLocaleDateString('en-US',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}): ''
+              %></td>
+              <td><% if((user) && user.id == event.user_id){ %>
+                <a href="<%= '/events/edit/'+ event.id %>" class="btn btn-primary">Edit </a>
+                <!-- <a href="<%= '/events/delete/'+ event.id %>" class="btn btn-danger">Delete</a> -->
+                <button class="btn btn-danger" onclick="deleteEvent()" id="DeleteBtn" data-id="<%= event.id %>">Delete</button>
+                <% } %></td>
+          </tr>
+          
+
+
 
     <%})%>
+
+
+  </tbody>
+</table>
+
     <div class="row">
       <div class="col-12 mt-2 mb-4">
         <nav aria-label="...">
           <ul class="pagination pagination-lg justify-content-center">
-            <% for(let i=1;i<=Math.ceil(total/5);i++){ %>
+            <% for(let i=1;i<=Math.ceil(total/15);i++){ %>
             <% if(page == i){ %>
             <li class="page-item active"><a class="page-link" href="<%= '/events/index/' + i %>"><%= i %></a></li>
 

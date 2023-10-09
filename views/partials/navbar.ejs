@@ -1,5 +1,5 @@
 <!-- navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark"style="padding:5px 15px" >
   <a class="navbar-brand" href="#">Node Events</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -31,6 +31,9 @@
       <% } %>
 
       <% if(locals.user != null){ %>
+        <li class="nav-item active">
+          <a class="nav-link" href="/user/profile" >profile</a>
+        </li>
       <li class="nav-item active">
         <a class="nav-link" href="/auth/logout" style="color: #f30707bd;font-weight: bold;background: #ffffffcc;margin-right: 20px;border-radius: 20px;">Logout</a>
       </li>

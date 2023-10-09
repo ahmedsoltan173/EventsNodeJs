@@ -20,8 +20,8 @@ const index = (req, res) => {
   }
 
   let q = {
-    skip: 5 * (page - 1),
-    limit: 5
+    skip: 15 * (page - 1),
+    limit: 15
   }
   //find total records
   let total = 0;

@@ -6,48 +6,65 @@
         <div class="col-md-6 offset-md-3"
           style="border: 11px solid #5a5a5a0d;border-radius: 20px;box-shadow: 9px 7px 0px 0px #a5a5a533;">
           <br>
-          <h2 style="text-align: center;">Login</h2>
+          <h2 style="text-align: center;">Profile</h2>
           <br>
           <hr>
           <%- include('../partials/flashMessage') %>
 
-          <div class="card">
-            <div class="card-body">
-              <div class="row" style="display: flex;
+            <div class="card">
+              <div class="card-body">
+                <div class="row" style="display: flex;
             justify-content: center;">
-                <!-- <div class="col-md-4">
+                  <!-- <div class="col-md-4">
                 <img src="https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg" alt="Profile Picture" class="img-fluid">
               </div> -->
-                <div class="col-md-8 ">
-                  <div class="mt-4 mb-4" style="height: 124px;border-radius: 23px;display: flex;justify-content: center;">
-                    <img style="width: 124px;height: 100%;border-radius: 50px;"   src="<%= '/storage/avatar/'+user.image %>"
-                      alt="Profile Picture" class="img-fluid">
-                  </div>
-                  <div>
-                    <h2>
-                      <%= user.name %>
-                    </h2>
-                    <p><b>Email:</b>
-                      <%= user.email %>
-                    </p>
-                    <p><b>Address: </b>
-                      <%= user.address %>
-                    </p>
-                    <p><b>Phone: </b>
-                      <%= user.phone %>
-                    </p>
+                  <div class="col-md-10 ">
+                    <div class="mt-4 mb-4"
+                      style="height: 124px;border-radius: 23px;display: flex;justify-content: center;">
+                      <img style="width: 124px;height: 100%;border-radius: 50px;"
+                        src="<%= '/storage/avatar/'+user.image %>" alt="Profile Picture" class="img-fluid">
+                    </div>
+                    <div>
+                      <h2>
+                        <%= user.name %>
+                      </h2>
+                      <p><b>Email:</b>
+                        <%= user.email %>
+                      </p>
+                      <p><b>Address: </b>
+                        <%= user.address %>
+                      </p>
+                      <p><b>Phone: </b>
+                        <%= user.phone %>
+                      </p>
+                    </div>
+                    <hr>
+                    <div>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <span>Image Preview</span>
+                          <img src=""
+                            class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+                            alt="" style="display: none;" id="imagePlaceHolder">
+                        </div>
+                        <div class="col-md-8">
+                          <p>Update Avatar</p>
+                          <form action="/user/uploadAvatar" method="post" enctype="multipart/form-data" class="form">
+                            <input type="file" class="form-control" name="avatar" id="avatar" class="col-md-12"
+                              onchange="readURL(this)">
+                            <br>
+                            <button type="submit" class="btn btn-primary col-md-6"> Upload</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </div>
-    <form action="/user/uploadAvatar" method="post" enctype="multipart/form-data" class="form">
-      <input type="file" class="form-control" name="avatar" >
-      <button type="submit" class="btn btn-primary"> Upload</button>
-    
-    </form>
+
 
 
     </div>
