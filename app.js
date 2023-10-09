@@ -1,4 +1,5 @@
 const express =require('express');
+const cors=require('cors');
 const app=express();
 const db = require('./config/database');
 const bodyParser=require('body-parser');
@@ -7,20 +8,26 @@ const flash = require('connect-flash')
 const passport =require('passport');
 const passportSetup=require('./config/auth');
 
+
+
 /********************************************************
  * ************************ bring *********************** 
  ********************************************************/
 //bring ejs templete 
 app.set('view engine','ejs');
+
 //bring body-parser
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
+
 //bring static public folder 
 app.use(express.static('public'));
+
 // app.use(express.static('config'));
 app.use(express.static('node_modules'));
 app.use(express.static("."));
+
 //sessions and flash 
 app.use(session({
     secret:'error',
@@ -33,34 +40,36 @@ app.use(flash());
 //bring passport auth 
 app.use(passport.initialize());
 app.use(passport.session());
-//store user object 
+
+
 
 //middleware
+const corsOption = {origin: ['http://localhost:8000'],};
 var middlewares =require('./routes/middleWare');
+    app.use(cors(corsOption));
     app.use('*',middlewares);
 
 
-//events routes 
+
+
+
+
+
 var events =require('./routes/eventRoutes');
-    app.use('/events',events);
-
-//events routes 
 var posts =require('./routes/postsRoutes');
-    app.use('/posts',posts);
-
-//auth routes 
 var auth=require('./routes/authRoutes');
-    app.use('/auth',auth);
+var user=require('./routes/userRoutes');    
 
-// user routes
-var user=require('./routes/userRoutes');
+    app.use('/events',events); 
+    app.use('/posts',posts);
+    app.use('/auth',auth);
     app.use('/user',user);
 
 
 
 
 
-//listen to port 3000
+//listen to port 8000
 app.listen(8000,()=>{
     console.log("app is working from port 3000");
 });

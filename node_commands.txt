@@ -13,3 +13,4 @@ npm indtsll psssport
 npm install passport passport-local bcrypt-nodejs
 //image upload 
 npm install --save multer
+npm install --save cors
